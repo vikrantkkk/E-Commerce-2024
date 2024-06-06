@@ -135,7 +135,7 @@ export const fetchAllProducts = asyncHandler(async (req, res) => {
 
 export const addProductReview = asyncHandler(async (req, res) => {
   try {
-    const {comment , rating} = req.body;
+    const { comment, rating } = req.body;
     const product = await Product.findById(req.params.id);
 
     if (product) {
@@ -169,6 +169,26 @@ export const addProductReview = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error("Product not found");
     }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error.message);
+  }
+});
+
+export const fetchTopProduct = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find().sort({ rating: -1 }).limit(5);
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error.message);
+  }
+});
+
+export const fetchNewProduct = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find().sort({ _id: -1 }).limit(5);
+    res.json(products);
   } catch (error) {
     console.error(error);
     res.status(400).json(error.message);

@@ -4,8 +4,10 @@ import {
   addProduct,
   addProductReview,
   fetchAllProducts,
+  fetchNewProduct,
   fetchProductById,
   fetchProducts,
+  fetchTopProduct,
   removeProduct,
   updateProduct,
 } from "../controllers/productController.js";
@@ -21,6 +23,8 @@ router
 
 router.route("/allproducts").get(fetchAllProducts);
 router.route("/:id/reviews").post(authenticate, CheckId, addProductReview);
+router.get("/topproducts",fetchTopProduct)
+router.get("/newproducts",fetchNewProduct)
 
 router
   .route("/:id")
